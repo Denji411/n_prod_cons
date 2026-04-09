@@ -10,4 +10,8 @@ typedef struct {
     int count;
 } buffer_t;
 
+extern int sem_vuoti;
+extern int sem_pieni;
+extern int mutex_buf;
+
 #endif
