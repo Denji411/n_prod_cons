@@ -8,5 +8,7 @@ void* produttore(void* arg) {
     buffer_t *buff = args->buff;
     FILE *fp   = args->fp;
 
+    while ()
+
     pthread_exit(NULL);
 }
