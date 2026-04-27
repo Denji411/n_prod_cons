@@ -7,7 +7,16 @@
 
 int main() {
     FILE *in_fp = fopen(INPUT_FILE, "r");
+    if(in_fp == NULL) {
+        perror("Errore di apertura file input");
+        return EXIT_FAILURE;
+    }
+
     FILE *out_fp = fopen(OUTPUT_FILE, "w");
+    if(out_fp == NULL) {
+        perror("Errore di apertura file output");
+        return EXIT_FAILURE;
+    }
 
     buffer_t *buff = malloc(sizeof(buffer_t));
 

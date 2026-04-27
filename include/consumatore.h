@@ -3,7 +3,6 @@
 
 #include <pthread.h>
 
-#define NC 3
 #define OUTPUT_FILE "output/output.txt"
 
 extern pthread_mutex_t mutex_file_out;

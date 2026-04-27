@@ -3,7 +3,10 @@
 
 #include <stdio.h>
 
-#define SENTINEL -1
+#define NP 3
+#define NC 3
+
+#define SENTINEL '\0'
 #define BUFFER_SIZE 8
 
 typedef struct {
