@@ -20,8 +20,14 @@ int main() {
 
     buffer_t *buff = malloc(sizeof(buffer_t));
 
+    buff -> buf = {0}
+    buff -> testa = 0;
+    buff -> coda = 0;
+    buff -> count = 0;
+
     pthread_mutex_init(&mutex_file_in, NULL);
     pthread_mutex_init(&mutex_file_out, NULL);
+    pthread_mutex_lock(&mutex_file_out, NULL);
 
     thread_args_t args_prod = { in_fp, buff };
     thread_args_t args_cons = { out_fp, buff };

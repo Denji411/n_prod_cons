@@ -2,6 +2,7 @@
 #define GLOBALS_H
 
 #include <stdio.h>
+#include <pthread.h>
 
 #define NP 3
 #define NC 3
@@ -20,6 +21,9 @@ typedef struct {
     int coda;
     int count;
 } buffer_t;
+
+extern pthread_mutex_t mutex_file_in;
+extern pthread_mutex_t mutex_file_out;
 
 extern int sem_vuoti;
 extern int sem_pieni;
