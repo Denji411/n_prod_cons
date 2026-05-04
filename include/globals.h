@@ -11,16 +11,16 @@
 #define BUFFER_SIZE 8
 
 typedef struct {
-    buffer_t *buff;
-    FILE *fp;
-} thread_args_t;
-
-typedef struct {
     char buf[BUFFER_SIZE];
     int testa;
     int coda;
     int count;
 } buffer_t;
+
+typedef struct {
+    buffer_t *buff;
+    FILE *fp;
+} thread_args_t;
 
 extern pthread_mutex_t mutex_file_in;
 extern pthread_mutex_t mutex_file_out;

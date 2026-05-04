@@ -12,32 +12,55 @@ void* produttore(void* arg) {
     while (1) {
         fscanf(fp, "%c", &ch);
         if (feof(ch)) {
-            
-            while (sem_vuoti < 0) {
-                sleep(1);
+
+            if (buff -> buf[buff -> coda] == '\0') {
+                break;
             }
+
+            /*while (sem_vuoti > 0) {
+                sleep(1);
+            }*/
 
             pthread_mutex_lock(&mutex_file_in);
             for(int i = 0; i < NC; i++) {
+
                 buff -> buf[buff -> testa] = '\0';
+                sem_pieni++;
+                sem_vuoti--;
+
                 if (buff -> testa != 7) {
                     buff -> testa++;
                 } else {
                     buff -> testa = 0;
                 }
+
             }
+
             pthread_mutex_unlock(&mutex_file_out);
             break;
+
         }
 
-        while (sem_vuoti < 0) {
+        /*while (sem_vuoti > 0) {
             sleep(1);
-        }
+        }*/
 
         pthread_mutex_lock(&mutex_file_in);
 
-        pthread_mutex_unlock(&mutex_file_in);
+        buff -> buf[buff -> testa] = ch;
+        sem_pieni++;
+        sem_vuoti--;
+
+        if (buff -> testa != 7) {
+            buff -> testa++;
+        } else {
+            buff -> testa = 0;
+        }
+
+        pthread_mutex_unlock(&mutex_file_out);
+
     }
 
     pthread_exit(NULL);
+
 }
