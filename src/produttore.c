@@ -10,8 +10,8 @@ void* produttore(void* arg) {
 
     char ch;
     while (1) {
-        fscanf(fp, "%c", &ch);
-        if (feof(ch)) {
+
+        if (feof(fp)) {
 
             if (buff -> buf[buff -> coda] == '\0') {
                 break;
@@ -22,6 +22,7 @@ void* produttore(void* arg) {
             }*/
 
             pthread_mutex_lock(&mutex_file_in);
+            
             for(int i = 0; i < NC; i++) {
 
                 buff -> buf[buff -> testa] = '\0';
@@ -40,6 +41,8 @@ void* produttore(void* arg) {
             break;
 
         }
+
+        fscanf(fp, "%c", &ch);
 
         /*while (sem_vuoti > 0) {
             sleep(1);

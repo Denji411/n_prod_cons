@@ -1,4 +1,5 @@
 #include <stdlib.h>
+#include <string.h>
 #include <unistd.h>
 
 #include "globals.h"
@@ -20,7 +21,7 @@ int main() {
 
     buffer_t *buff = malloc(sizeof(buffer_t));
 
-    memset(buff->buf, 0, sizeof(buff->buf));
+    memset(buff -> buf, 0, sizeof(buff -> buf));
     buff -> testa = 0;
     buff -> coda = 0;
     buff -> count = 0;
@@ -29,8 +30,8 @@ int main() {
     pthread_mutex_init(&mutex_file_out, NULL);
     pthread_mutex_lock(&mutex_file_out);
 
-    thread_args_t args_prod = { in_fp, buff };
-    thread_args_t args_cons = { out_fp, buff };
+    thread_args_t args_prod = { buff, in_fp };
+    thread_args_t args_cons = { buff, out_fp };
 
     pthread_t prod[NP], cons[NC];
 
