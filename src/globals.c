@@ -1,5 +1,8 @@
 #include "globals.h"
 
-int sem_vuoti = BUFFER_SIZE;
-int sem_pieni = 0;
-int mutex_buf;
+pthread_mutex_t mutex_file_in;
+pthread_mutex_t mutex_file_out;
+
+sem_t sem_vuoti;
+sem_t sem_pieni;
+pthread_mutex_t mutex_buf;

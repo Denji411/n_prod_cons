@@ -1,40 +1,29 @@
 #include "globals.h"
 #include "consumatore.h"
 
-pthread_mutex_t mutex_file_out;
-
 void* consumatore(void* arg) {
     thread_args_t *args = (thread_args_t*)arg;
-    buffer_t *buff = args -> buff;
-    FILE *fp = args -> fp;
+    buffer_t *buff = args->buff;
+    FILE     *fp   = args->fp;
 
     char ch;
     while (1) {
-        if (buff -> buf[buff -> coda] == '\0') {   
-            break;
-        }
+        sem_wait(&sem_pieni);
+        pthread_mutex_lock(&mutex_buf);
 
-        /*while (sem_pieni > 0) {
-            sleep(1);
-        }*/
+        ch = buff->buf[buff->coda];
+        buff->coda = (buff->coda + 1) % BUFFER_SIZE;
+        buff->count--;
+
+        pthread_mutex_unlock(&mutex_buf);
+        sem_post(&sem_vuoti);
+
+        if (ch == SENTINEL) break;
 
         pthread_mutex_lock(&mutex_file_out);
-
-        ch = buff -> buf[buff -> coda];
         fprintf(fp, "%c", ch);
-        sem_pieni--;
-        sem_vuoti++;
-
-        if (buff -> coda != 7) {
-            buff -> coda++;
-        } else {
-            buff -> coda = 0;
-        }
-
-        pthread_mutex_unlock(&mutex_file_in);
-
+        pthread_mutex_unlock(&mutex_file_out);
     }
 
     pthread_exit(NULL);
-
 }

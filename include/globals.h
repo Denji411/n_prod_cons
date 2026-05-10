@@ -3,6 +3,7 @@
 
 #include <stdio.h>
 #include <pthread.h>
+#include <semaphore.h>
 
 #define NP 3
 #define NC 3
@@ -25,8 +26,8 @@ typedef struct {
 extern pthread_mutex_t mutex_file_in;
 extern pthread_mutex_t mutex_file_out;
 
-extern int sem_vuoti;
-extern int sem_pieni;
-extern int mutex_buf;
+extern sem_t sem_vuoti;
+extern sem_t sem_pieni;
+extern pthread_mutex_t mutex_buf;
 
 #endif

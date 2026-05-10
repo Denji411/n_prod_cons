@@ -18,7 +18,7 @@ globals: src/globals.c
 	$(CC) -c src/globals.c $(CFLAGS) -o build/globals.o
 
 programma:
-	$(CC) build/*.o -o bin/programma
+	$(CC) build/*.o -lpthread -o bin/programma
 
 clean:
 	rm -f build/*.o bin/programma
