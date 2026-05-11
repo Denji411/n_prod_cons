@@ -35,6 +35,7 @@ int main() {
     pthread_mutex_init(&mutex_file_in,  NULL);
     pthread_mutex_init(&mutex_file_out, NULL);
     pthread_mutex_init(&mutex_buf,      NULL);
+    pthread_mutex_init(&mutex_sentinel, NULL);
     sem_init(&sem_vuoti, 0, BUFFER_SIZE);
     sem_init(&sem_pieni, 0, 0);
 

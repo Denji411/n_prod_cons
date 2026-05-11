@@ -13,16 +13,22 @@ void* produttore(void* arg) {
         pthread_mutex_unlock(&mutex_file_in);
 
         if (ret == EOF) {
-            for (int i = 0; i < NC; i++) {
-                sem_wait(&sem_vuoti);
-                pthread_mutex_lock(&mutex_buf);
+            pthread_mutex_lock(&mutex_sentinel);
+            if (!sentinel_inviati) {
+                sentinel_inviati = 1;
+                pthread_mutex_unlock(&mutex_sentinel);
 
-                buff->buf[buff->testa] = SENTINEL;
-                buff->testa = (buff->testa + 1) % BUFFER_SIZE;
-                buff->count++;
-
-                pthread_mutex_unlock(&mutex_buf);
-                sem_post(&sem_pieni);
+                for (int i = 0; i < NC; i++) {
+                    sem_wait(&sem_vuoti);
+                    pthread_mutex_lock(&mutex_buf);
+                    buff->buf[buff->testa] = SENTINEL;
+                    buff->testa = (buff->testa + 1) % BUFFER_SIZE;
+                    buff->count++;
+                    pthread_mutex_unlock(&mutex_buf);
+                    sem_post(&sem_pieni);
+                }
+            } else {
+                pthread_mutex_unlock(&mutex_sentinel);
             }
             break;
         }

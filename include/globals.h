@@ -25,6 +25,8 @@ typedef struct {
 
 extern pthread_mutex_t mutex_file_in;
 extern pthread_mutex_t mutex_file_out;
+extern pthread_mutex_t mutex_sentinel;
+extern int sentinel_inviati;
 
 extern sem_t sem_vuoti;
 extern sem_t sem_pieni;
